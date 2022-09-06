@@ -43,6 +43,9 @@ void SetTimeZone(int8_t time_zone);
 uint16_t GetTextSize();
 void SetTextSize(uint16_t size);
 
+void SetSessionId(String session_id);
+String GetSessionId();
+
 const uint8_t* GetLoadingIMG_32x32(uint8_t id);
 void LoadingAnime_32x32_Start(uint16_t x, uint16_t y);
 void LoadingAnime_32x32_Stop();

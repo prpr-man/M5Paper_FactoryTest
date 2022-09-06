@@ -43,6 +43,7 @@ uint8_t global_time_synced      = false;
 uint8_t global_ttf_file_loaded  = false;
 uint8_t global_init_status      = 0xFF;
 int8_t global_timezone          = 8;
+String global_session_id;
 
 int8_t GetTimeZone(void) {
     return global_timezone;
@@ -133,6 +134,9 @@ esp_err_t LoadSetting(void) {
     NVS_CHECK(nvs_get_str(nvs_arg, "pswd", buf, &length));
     global_wifi_password = String(buf);
     global_wifi_configed = true;
+    length           = 128;
+    NVS_CHECK(nvs_get_str(nvs_arg, "sessionid", buf, &length));
+    global_session_id = String(buf);
     nvs_close(nvs_arg);
     return ESP_OK;
 }
@@ -146,6 +150,7 @@ esp_err_t SaveSetting(void) {
     NVS_CHECK(nvs_set_i8(nvs_arg, "timezone", global_timezone));
     NVS_CHECK(nvs_set_str(nvs_arg, "ssid", global_wifi_ssid.c_str()));
     NVS_CHECK(nvs_set_str(nvs_arg, "pswd", global_wifi_password.c_str()));
+    NVS_CHECK(nvs_set_str(nvs_arg, "sessionid", global_session_id.c_str()));
     NVS_CHECK(nvs_commit(nvs_arg));
     nvs_close(nvs_arg);
     return ESP_OK;
@@ -199,6 +204,15 @@ uint16_t GetTextSize() {
 
 void SetTextSize(uint16_t size) {
     global_reader_textsize = size;
+}
+
+String GetSessionId() {
+    return global_session_id;
+}
+
+void SetSessionId(String session_id) {
+    global_session_id = session_id;
+    SaveSetting();
 }
 
 const uint8_t *GetLoadingIMG_32x32(uint8_t id) {

@@ -152,6 +152,8 @@ void SysInit_Start(void) {
         EPDGUI_AddFrame("Frame_Compare", frame_compare);
         Frame_Home *frame_home = new Frame_Home();
         EPDGUI_AddFrame("Frame_Home", frame_home);
+        Frame_Attendance *frame_attendance = new Frame_Attendance();
+        EPDGUI_AddFrame("Frame_Attendance", frame_attendance);
 
         if (isWiFiConfiged()) {
             SysInit_UpdateInfo("Connect to " + GetWifiSSID() + "...");
